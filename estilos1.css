@@ -1,0 +1,38 @@
+body{
+	background-color: rgb(246, 255, 0);
+}
+table{
+	width: 100%;
+	border: 1px solid gray;
+	border-collapse: collapse;
+	caption-side: top;
+
+}
+td {
+	border: 1px solid gray;
+
+}
+
+th{
+	border: 1px solid gray;
+
+}
+/*Fondo para las filas inpares odd*/
+table tr:nth-child(odd){
+	background-color: white;
+}
+/*Fondo para las filas pares even*/
+table tr:nth-child(even){
+	background-color: rgb(187, 0, 255);
+}
+
+table tr th{
+	background-color: rgb(30, 0, 255);
+	color: white;
+}
+
+/*color de seleccion*/
+table tr:hover{
+	background-color: green;
+	color: white;
+}
