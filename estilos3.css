@@ -1,0 +1,48 @@
+ .capa1{
+ 	margin-left: 25%;
+ 	padding: 12px;
+
+
+}
+
+ul{
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+	width: 20%;
+	height: 100%;
+	background-color: lightcoral;
+	position: fixed;
+}
+
+
+li a{
+	background-color: darkred;
+	color: white;
+	display: block;
+	padding: 16px;
+	text-decoration: none;
+}
+
+li a:hover {
+background-color: green;
+}
+
+li .activo{
+	background-color: darkblue;
+	color: white;
+	
+}
+
+h1{
+  font-family: "Emblema One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h2{
+	font-family: "Doto", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
