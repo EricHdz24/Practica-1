@@ -1,8 +1,6 @@
  .capa1{
  	margin-left: 25%;
  	padding: 12px;
-
-
 }
 
 ul{
@@ -11,13 +9,12 @@ ul{
 	margin: 0px;
 	width: 20%;
 	height: 100%;
-	background-color: lightcoral;
+	background-color: lightgreen;
 	position: fixed;
 }
 
-
 li a{
-	background-color: darkred;
+	background-color: lightgreen;
 	color: white;
 	display: block;
 	padding: 16px;
@@ -29,20 +26,29 @@ background-color: green;
 }
 
 li .activo{
-	background-color: darkblue;
+	background-color: skyblue;
 	color: white;
-	
 }
-
+li .activo:hover{
+	background-color: blue;
+}
 h1{
-  font-family: "Emblema One", system-ui;
-  font-weight: 400;
-  font-style: normal;
+	 font-family: "Playwrite HU", cursive;
+
 }
 
 h2{
-	font-family: "Doto", system-ui;
-  font-weight: 400;
-  font-style: normal;
+	   font-family: "Playwrite HU", cursive;
+  
 }
 
+@font-face{
+	font-family:"fuente1" ;
+	src: url("fuentes/RockSalt-Regular.ttf") format("truetype");
+}
+
+p{
+	font-family: "fuente1";
+	font-size: 18px;
+	text-align: justify;
+}
