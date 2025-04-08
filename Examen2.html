@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="estExamen2.css">
+ 		<title>Examen práctico Parcial 2</title>
+	</head>
+
+	<body>
+		<div class="centrado">
+			<h1>Examen práctico Parcial 2</h1>
+			<h2>Nombre del alumno(a): Eric Yael Hernandez Hernandez </h2>
+			<button id="mostrar">Galería de imágenes</button>
+		</div>
+		
+    
+		<header>
+			<div class="galeria" id="ima">
+				<table  >
+					<tbody> 
+						 <tr>
+
+							<td>
+								<div class="imagen">
+									<img src="1.png"  alt="Paisaje 1"  width="300" height="552">
+								</div>
+								
+							</td>
+
+							<td>
+								<div class="imagen">
+									<img src="2.png"  alt="Paisaje 2" width="300" height="552">
+								</div>
+								
+							</td>
+
+							<td>
+								<div class="imagen">
+									<img src="3.png"  alt="Paisaje 3" width="300" height="552">
+								</div>
+								
+							</td>
+
+							<td>
+								<div class="imagen">
+									<img src="4.png"  alt="Paisaje 4" width="300" height="552">
+								</div>
+								
+							</td>
+							
+					 	</tr>
+					</tbody>
+				</table>
+			</div>
+		</header>
+	
+	<script>
+		document.getElementById('mostrar').addEventListener('mouseover', function() {
+			document.getElementById('ima').style.display = 'none';
+		});
+	
+		document.getElementById('mostrar').addEventListener('mouseout', function() {
+			var ima = document.getElementById('ima');
+			ima.style.display = 'block';
+			ima.style.position = 'absolute';
+			ima.style.top = '50%';
+			ima.style.left = '50%';
+			ima.style.transform = 'translate(-50%, -34%)';
+		});
+	</script>
+	
+	</body>
+</html>
