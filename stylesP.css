@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: black;
+    color: white;
+}
+
+header {
+    background-color: #111;
+    padding: 20px;
+    width: 100%; /* Asegura que el header ocupe todo el ancho */
+    box-sizing: border-box;
+}
+
+nav {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%; /* Asegura que la navegación ocupe todo el ancho */
+    box-sizing: border-box;
+    padding: 10px 0; /* Añade un poco de espacio vertical */
+}
+
+nav button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 0; /* Elimina el margen horizontal para mejor distribución */
+    cursor: pointer;
+    font-size: 16px;
+    flex-grow: 1; /* Permite que los botones se expandan para llenar el espacio */
+    text-align: center; /* Centra el texto dentro de los botones */
+    text-decoration: none;
+}
+
+nav button:hover {
+    background-color: skyblue;
+    border-radius: 15px;
+    text-decoration: none;
+}
+
+.active a {
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin: 0;
+    border-radius: 5px;
+}
+
+
+.hero {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 80px 20px;
+}
+
+.hero-content h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.2em;
+}
+
+.hero-image {
+    width: 400px; /* Ajusta el tamaño según sea necesario */
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-image img {
+    max-width: 100%; /* Asegura que la imagen se ajuste al contenedor */
+    height: auto;
+    display: block;
+    transition: transform 1s ease-in-out;
+}
+
+.hero-image:hover img {
+    transform: rotate(360deg);
+}
+
+.content {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    flex-direction: column;
+}
+
+.content-section {
+    background-color: #111;
+    padding: 40px;
+    text-align: center;
+}
+.content-section:hover{
+    background-color: gray;
+    padding: 40px;
+    text-align: center;
+}
+
+.content-section h2 {
+    font-size: 2em;
+}
+.content-section h3, p, ul{
+    font-size: 2em;
+    text-align: left;
+}
+
+h2,h1{
+    font-family: titulo2 ;
+    color: #efb810;
+}
+
+h3{
+    font-family: titulo2 ;
+    color: #6963db;
+}
+ p{
+    font-family: titulo2;
+ }
+
+
+@font-face{
+    font-family: titulo2 ;
+    src: url(Fuentes/Sanchez-Regular.ttf);
+
+}
+
+
