@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de C</title>
+   <link rel="stylesheet" type="text/css" href="P3prac3.2.css">
+    
+    <script src="P3prac3.3.js"></script>
+</head>
+<body>
+    <h1>¿Cuánto sabes de C?</h1>
+
+    <div class="container">
+        <form id="formularioC">
+        <h3>1. ¿Quien es el personaje principal?</h3>
+        <input type="radio" name="p1" value="0"> kaiser Michael <br>
+        <input type="radio" name="p1" value="1"> Isagi yoichi<br>
+        <input type="radio" name="p1" value="0"> Itoshi Rin<br><br>
+      
+        <h3>2. ¿Quien dirije el proyecto ?</h3>
+        <input type="radio" name="p2" value="1"> Jinpachi Ego<br>
+        <input type="radio" name="p2" value="0"> Ani Thierry<br>
+        <input type="radio" name="p2" value="0"> Noel Noa<br><br>
+      
+        <h3>3. ¿En donde se origina el poyecto?</h3>
+        <input type="radio" name="p3" value="1"> Japon <br>
+        <input type="radio" name="p3" value="0"> Estados Unidos<br>
+        <input type="radio" name="p3" value="0"> Alemania<br><br>
+      
+        <h3>4. ¿Cual es el objetivo del proyecto?</h3>
+        <input type="radio" name="p4" value="1"> Ser el mejor delantero del mundo<br>
+        <input type="radio" name="p4" value="0"> Ser el mejor taquero del mundo<br>
+        <input type="radio" name="p4" value="0"> Crear el mejor equipo para ganar el mundial<br><br>
+      
+        <h3>5. ¿Que trata de transmitir el anime ?</h3>
+        <input type="radio" name="p5" value="1"> Demostrar que el ego propio no es malo <br>
+        <input type="radio" name="p5" value="0"> Que el trabjo en equipo es la mejor solucion para los problemas <br>
+        <input type="radio" name="p5" value="0"> Que el dinero lo puede todo<br><br>
+      
+        <button type="button" onclick="calcularResultado()">Enviar</button>
+      </form>
+
+      <div class="containerPuntaje">
+        <div id="resultado"></div>
+        <canvas id="grafico" width="400" height="200"></canvas>
+        <br>
+        <button onclick="generarPDF()">Descargar PDF</button>
+      </div>
+    </div>
+    <!-- Chart.js para gráficos -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- jsPDF para generar PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+    function calcularResultado() {
+    let total = 0;
+    let resultados = [];
+
+    for (let i = 1; i <= 5; i++) {
+        let seleccion = document.querySelector(`input[name="p${i}"]:checked`);
+        if (seleccion) {
+        let valor = parseInt(seleccion.value);
+        total += valor;
+        resultados.push(valor);
+        } else {
+        resultados.push(0); // Si no responde, cuenta como 0
+        }
+    }
+
+    document.getElementById("resultado").innerText = `Puntaje total: ${total}/5`;
+
+    generarGrafico(resultados);
+    }
+
+    // Guardamos el gráfico para poder actualizarlo sin duplicar
+    let miGrafico = null;
+
+    function generarGrafico(datos) {
+    const ctx = document.getElementById("grafico").getContext("2d");
+
+    if (miGrafico) {
+        miGrafico.destroy(); // Si ya existe, lo destruimos antes de crear otro
+    }
+
+    miGrafico = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: ['Pregunta 1', 'Pregunta 2', 'Pregunta 3', 'Pregunta 4', 'Pregunta 5'],
+        datasets: [{
+            label: 'Puntaje por pregunta',
+            data: datos,
+            backgroundColor: '#3498db',
+            borderRadius: 5
+        }]
+        },
+        options: {
+        scales: {
+            y: {
+            beginAtZero: true,
+            max: 1,
+            ticks: { stepSize: 1 }
+            }
+        }
+        }
+    });
+    }
+
+    async function generarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const resultado = document.getElementById("resultado").innerText;
+
+    doc.setFontSize(16);
+    doc.text("Resultado del cuestionario de C", 20, 20);
+    doc.setFontSize(12);
+    doc.text(resultado, 20, 40);
+
+    doc.save("resultado_C.pdf");
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+/* Reset y estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #2d8285 0%, #1a2352 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+}
+
+/* Contenedor del formulario */
+form {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+form:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+}
+
+/* Títulos y textos */
+h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+label {
+    font-weight: 600;
+    color: #2d3d85;
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+/* Campos de entrada */
+input[type="user"], 
+input[type="password"], 
+select {
+    background: white;
+    border: 2px solid #e0e5ec;
+    border-radius: 10px;
+    padding: 12px 20px;
+    margin: 0 0 20px 0;
+    width: 100%;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+input[type="user"]:focus, 
+input[type="password"]:focus, 
+select:focus {
+    outline: none;
+    border-color: #2d3d85;
+    box-shadow: 0 0 0 3px rgba(45, 61, 133, 0.2);
+}
+
+/* Radio buttons */
+input[type="radio"] {
+    margin: 0 10px 0 0;
+    transform: scale(1.2);
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.radio-group label {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    color: #555;
+}
+
+/* Botón */
+input[type="button"] {
+    background: linear-gradient(135deg, #2d3d85 0%, #1a2352 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 25px 0 15px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+input[type="button"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #1a2352 0%, #2d3d85 100%);
+}
+
+input[type="button"]:active {
+    transform: translateY(0);
+}
+
+/* Contenedor de datos */
+.datos {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 30px;
+}
+
+.containerDatos {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 15px;
+    width: 100%;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+    color: #2d3d85;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.containerDatos:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Efectos adicionales */
+::placeholder {
+    color: #aaa;
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        padding: 20px 10px;
+    }
+    
+    form, .containerDatos {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+}
