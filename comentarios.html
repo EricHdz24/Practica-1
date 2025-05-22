@@ -5,6 +5,209 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preguntas Frecuentes - Películas Ganadoras del Óscar</title>
     <link rel="stylesheet" href="estilosCom.css">
+    <script type="text/javascript" src="js/jquery/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script type="text/javascript">
+    const { jsPDF } = window.jspdf;
+    
+    function validarFormulario() {
+        const nombre = document.getElementById('user').value;
+        if (nombre.trim() === '') {
+            alert('Por favor ingresa tu nombre');
+            return false;
+        }
+        
+        const genero = document.querySelector('input[name="genero"]:checked');
+        if (!genero) {
+            alert('Por favor selecciona tu género');
+            return false;
+        }
+        
+        return true; 
+    }
+    
+    function generarPDF() {
+        if (!validarFormulario()) {
+            return; 
+        }
+        
+        const doc = new jsPDF();
+        doc.setFontSize(26);
+        doc.setTextColor(100, 150, 0);
+        doc.text(30, 30, "¡Gracias por completar el formulario!");
+            
+        doc.setFontSize(16);
+        doc.setTextColor(0, 0, 0);
+        doc.text(30, 50, "Este es tu reconocimiento.");
+            
+        const nombre = document.getElementById('user').value;
+        const edad = document.getElementById('edad').value;
+        const genero = document.querySelector('input[name="genero"]:checked').value === 'f' ? 'Femenino' : 'Masculino';
+            
+        doc.setFontSize(14);
+        doc.text(30, 70, `Nombre: ${nombre}`);
+        doc.text(30, 80, `Edad: ${edad}`);
+        doc.text(30, 90, `Género: ${genero}`);
+            
+        const fecha = new Date().toLocaleDateString();
+        doc.text(30, 130, `Fecha: ${fecha}`);
+        doc.text(30, 150, "Firma: _________________________");
+            
+        doc.save(`Formulario_Cine_${nombre.replace(' ', '_')}.pdf`);
+        alert('PDF generado con éxito. Se descargará automáticamente.');
+    }
+
+    // Funciones para el blog con almacenamiento en localStorage
+    document.addEventListener('DOMContentLoaded', function() {
+        cargarPreguntas();
+        
+        document.getElementById('preguntaForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('nombre').value.trim();
+            const pregunta = document.getElementById('pregunta').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const categoria = document.getElementById('categoria').value;
+            const categoriaTexto = document.getElementById('categoria').options[document.getElementById('categoria').selectedIndex].text;
+            
+            if (nombre === '' || pregunta === '') {
+                alert('Por favor completa los campos obligatorios');
+                return;
+            }
+            
+            const nuevaPregunta = {
+                id: Date.now(),
+                pregunta: pregunta,
+                nombre: nombre,
+                email: email,
+                categoria: categoria,
+                categoriaTexto: categoriaTexto,
+                fecha: new Date().toLocaleDateString(),
+                respuestas: [],
+                respondida: false
+            };
+            
+            guardarPregunta(nuevaPregunta);
+          
+            mostrarPregunta(nuevaPregunta);
+            
+            document.getElementById('preguntaForm').reset();
+            alert('Tu pregunta ha sido publicada. ¡Gracias por participar!');
+        });
+
+        document.addEventListener('click', function(e) {
+            // Mostrar formulario de respuesta
+            if (e.target.classList.contains('responder-btn')) {
+                const post = e.target.closest('.blog-post');
+                const respuestaForm = post.querySelector('.respuesta-form');
+                respuestaForm.style.display = respuestaForm.style.display === 'block' ? 'none' : 'block';
+                e.target.textContent = respuestaForm.style.display === 'block' ? 'Cancelar' : 'Responder';
+            }
+        
+            if (e.target.classList.contains('enviar-respuesta')) {
+                const post = e.target.closest('.blog-post');
+                const respuestaText = post.querySelector('.respuesta-text').value.trim();
+                const respuestaNombre = post.querySelector('.respuesta-nombre').value.trim();
+                const preguntaId = parseInt(post.dataset.id);
+                
+                if (respuestaText === '' || respuestaNombre === '') {
+                    alert('Por favor completa todos los campos para responder');
+                    return;
+                }
+                
+                const nuevaRespuesta = {
+                    texto: respuestaText,
+                    nombre: respuestaNombre,
+                    fecha: new Date().toLocaleDateString()
+                };
+                
+                guardarRespuesta(preguntaId, nuevaRespuesta);
+                
+                const respuestaDiv = document.createElement('div');
+                respuestaDiv.className = 'post-answer';
+                respuestaDiv.innerHTML = `
+                    <h5>Respuesta:</h5>
+                    <p>${respuestaText}</p>
+                    <span class="answer-meta">Respondido por: ${respuestaNombre} | ${nuevaRespuesta.fecha}</span>
+                `;
+                
+                post.querySelector('.post-content').insertBefore(respuestaDiv, post.querySelector('.respuesta-form'));
+                post.querySelector('.no-answer')?.remove();
+                post.classList.remove('unanswered');
+                post.querySelector('.respuesta-form').style.display = 'none';
+                post.querySelector('.responder-btn').textContent = 'Responder';
+                
+                // Limpiar formulario
+                post.querySelector('.respuesta-text').value = '';
+                post.querySelector('.respuesta-nombre').value = '';
+                
+                alert('¡Gracias por tu respuesta!');
+            }
+        });
+        
+        function cargarPreguntas() {
+            const preguntas = JSON.parse(localStorage.getItem('blogPreguntas')) || [];
+            preguntas.forEach(pregunta => {
+                mostrarPregunta(pregunta);
+            });
+        }
+        
+        function mostrarPregunta(pregunta) {
+            const blogPosts = document.querySelector('.blog-posts');
+            const newPost = document.createElement('article');
+            newPost.className = `blog-post ${pregunta.respondida ? '' : 'unanswered'}`;
+            newPost.dataset.id = pregunta.id;
+            newPost.innerHTML = `
+                <div class="post-header">
+                    <h4>${pregunta.pregunta}</h4>
+                    <span class="post-meta">Publicado por: ${pregunta.nombre} | ${pregunta.fecha} | Categoría: ${pregunta.categoriaTexto}</span>
+                </div>
+                <div class="post-content">
+                    <p>${pregunta.pregunta}</p>
+                    ${pregunta.respondida ? '' : '<div class="no-answer">Esta pregunta aún no tiene respuesta. ¡Sé el primero en responder!</div>'}
+                    ${pregunta.respuestas.map(respuesta => `
+                        <div class="post-answer">
+                            <h5>Respuesta:</h5>
+                            <p>${respuesta.texto}</p>
+                            <span class="answer-meta">Respondido por: ${respuesta.nombre} | ${respuesta.fecha}</span>
+                        </div>
+                    `).join('')}
+                    <div class="respuesta-form" style="display: none;">
+                        <textarea class="respuesta-text" placeholder="Escribe tu respuesta aquí..." rows="3"></textarea>
+                        <input type="text" class="respuesta-nombre" placeholder="Tu nombre">
+                        <button class="enviar-respuesta">Enviar respuesta</button>
+                    </div>
+                    <button class="responder-btn">Responder</button>
+                </div>
+            `;
+            
+            blogPosts.insertBefore(newPost, blogPosts.firstChild.nextSibling);
+            setTimeout(() => {
+                newPost.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+        
+        function guardarPregunta(pregunta) {
+            const preguntas = JSON.parse(localStorage.getItem('blogPreguntas')) || [];
+            preguntas.unshift(pregunta); 
+            localStorage.setItem('blogPreguntas', JSON.stringify(preguntas));
+        }
+        
+        // Función para guardar una respuesta
+        function guardarRespuesta(preguntaId, respuesta) {
+            const preguntas = JSON.parse(localStorage.getItem('blogPreguntas')) || [];
+            const preguntaIndex = preguntas.findIndex(p => p.id === preguntaId);
+            
+            if (preguntaIndex !== -1) {
+                preguntas[preguntaIndex].respuestas.push(respuesta);
+                preguntas[preguntaIndex].respondida = true;
+                localStorage.setItem('blogPreguntas', JSON.stringify(preguntas));
+            }
+        }
+    });
+    </script>
 </head>
 <body>
     <header>
@@ -23,88 +226,189 @@
                 <li><a href="#ayuda">Ayuda</a></li>
                 <li><a href="#frecuentes">Preguntas Frecuentes</a></li>
                 <li><a href="#grupos-ayuda">Grupos de ayuda</a></li>
+                <li><a href="#blog-cine">Blog de Cine</a></li>
+                <li><a href="#cuestionario">Cuestionario</a></li>
             </ul>
         </section>
 
         <section class="content">
-            <h1 id="frecuentes">Preguntas Frecuentes (FAQ) - Reseñas de Películas Ganadoras del Óscar</h1>
+            <h1 id="frecuentes">Preguntas frecuentes (FAQ) - Reseñas de Películas Ganadoras del Óscar</h1>
+            
+            <div class="faq-section">
+                <h2>Ayuda</h2>
+                <div class="faq-item">
+                    <h3>¿Qué tipo de películas encontrará en esta página?</h3>
+                    <p>Aquí encontrarás reseñas y análisis de películas que han sido galardonadas con al menos un Premio Óscar en alguna categoría, ya sea Mejor Película, Mejor Director, Mejor Actor/Actriz, etc. Nos enfocamos en destacar y analizar el cine premiado por la Academia.</p>
+                </div>
 
-            <div class="faq-item">
-                <h3>¿Qué tipo de películas encontraré en esta página?</h3>
-                <p>Aquí encontrarás reseñas y análisis de películas que han sido galardonadas con al menos un Premio Óscar en alguna categoría, ya sea Mejor Película, Mejor Director, Mejor Actor/Actriz, etc. Nos enfocamos en destacar y analizar el cine premiado por la Academia.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>¿Las reseñas son solo de las películas que ganaron el Óscar a Mejor Película?</h3>
-                <p>No necesariamente. Si bien las ganadoras a Mejor Película tendrán un lugar destacado, también incluiremos reseñas de otras películas que recibieron premios Óscar importantes en diversas categorías.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>¿Las reseñas son retrospectivas o también incluyen películas ganadoras recientes?</h3>
-                <p>Intentamos ofrecer una mezcla de reseñas de películas clásicas que ganaron el Óscar y también de las ganadoras más recientes. Queremos abarcar diferentes épocas del cine premiado.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>¿Puedo encontrar información sobre qué premios Óscar ganó cada película reseñada?</h3>
-                <p>Sí, aunque no en todas las reseñas estan especificadas.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>¿Las opiniones en las reseñas reflejan el consenso de la Academia o son personales?</h3>
-                <p>Nuestras reseñas son análisis y opiniones personales de nuestros críticos. Si bien reconocemos el prestigio del Premio Óscar, nuestras valoraciones buscan ofrecer una perspectiva crítica y actual de la película.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>¿Puedo comentar y compartir mi opinión sobre las películas ganadoras del Óscar?</h3>
-                <p>¡Absolutamente! Fomentamos la discusión y el intercambio de ideas sobre estas películas tan significativas. Habrá una sección de comentarios donde puedes compartir tus pensamientos.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>¿Cómo puedo buscar reseñas de películas ganadoras de un año específico de los Óscar?</h3>
-                <p>Generalmente, ofreceremos opciones de búsqueda y filtrado por año de la ceremonia de los Premios Óscar o por la categoría principal.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>¿Qué tan profundas son las reseñas? ¿Solo se enfocan en por qué ganaron el Óscar?</h3>
-                <p>Nuestras reseñas buscan ser completas. Si bien mencionaremos el contexto de su victoria en los Óscar, también analizaremos los aspectos cinematográficos, narrativos y temáticos de la película en profundidad.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>¿También incluyen información sobre las nominaciones que recibieron estas películas?</h3>
-                <p>En muchos casos, sí. Mencionar las nominaciones ayuda a entender el panorama competitivo en el que la película ganó sus premios.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>¿Puedo sugerir películas ganadoras del Óscar para que sean reseñadas?</h3>
-                <p>¡Claro que sí! Agradecemos tus sugerencias. Puedes enviarnos tus propuestas a través de nuestro formulario de contacto o correo electrónico.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>¿La página está enfocada en películas de habla inglesa o también incluyen ganadoras de otros idiomas?</h3>
-                <p>Buscamos incluir reseñas de películas ganadoras del Óscar en diversas categorías, incluyendo aquellas de habla no inglesa que han sido reconocidas por la Academia.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>¿Qué pasa si no estoy de acuerdo con su opinión sobre una película ganadora del Óscar?</h3>
-                <p>¡Es totalmente válido! El cine es subjetivo y los gustos varían. Te invitamos a compartir tu perspectiva en la sección de comentarios y a participar en el debate de manera respetuosa.</p>
+                <div class="faq-item">
+                    <h3>¿Las reseñas son solo de las películas que ganaron el Óscar a Mejor Película?</h3>
+                    <p>No necesariamente. Si bien las ganadoras a Mejor Película tendrán un lugar destacado, también incluiremos reseñas de otras películas que recibieron premios Óscar importantes en diversas categorías.</p>
+                </div>
             </div>
 
             <h2 id="grupos-ayuda">Grupos de Ayuda y Recursos sobre Reseñas de Películas</h2>
             <p>Aquí encontrarás enlaces a otros sitios web donde puedes encontrar más reseñas, discusiones y comunidades de cinéfilos:</p>
             <ul>
-                <li><a href="https://www.filmaffinity.com/es/main.html" target="_blank" >FilmAffinity</a></li>
+                <li><a href="https://www.filmaffinity.com/es/main.html" target="_blank">FilmAffinity</a></li>
                 <li><a href="https://www.sensacine.com/" target="_blank">Sensacine</a></li>
-                <li><a href="https://www.espinof.com/" target="_blank" >Espinof</a></li>
+                <li><a href="https://www.espinof.com/" target="_blank">Espinof</a></li>
                 <li><a href="https://www.tomatazos.com/" target="_blank">Tomatazos</a></li>
                 <li><a href="https://www.cinefilia.blog/" target="_blank">Cinefilia</a></li>
-                <li><a href="https://www.imdb.com/es/" target="_blank" >IMDb (Internet Movie Database)</a></li>
-                <li><a href="https://www.rottentomatoes.com/" target="_blank" >Rotten Tomatoes</a></li>
+                <li><a href="https://www.imdb.com/es/" target="_blank">IMDb (Internet Movie Database)</a></li>
+                <li><a href="https://www.rottentomatoes.com/" target="_blank">Rotten Tomatoes</a></li>
                 <li><a href="https://www.metacritic.com/movie" target="_blank">Metacritic</a></li>
-                <li><a href="https://letterboxd.com/" target="_blank" >Letterboxd</a></li>
-                <li><a href="https://www.reddit.com/r/movies/" target="_blank" >Reddit (r/movies)</a></li>
+                <li><a href="https://letterboxd.com/" target="_blank">Letterboxd</a></li>
+                <li><a href="https://www.reddit.com/r/movies/" target="_blank">Reddit (r/movies)</a></li>
                 <li><a href="https://www.reddit.com/r/flicks/" target="_blank">Reddit (r/flicks)</a></li>
             </ul>
+
+            <section id="blog-cine" class="blog-container">
+                <h2>Blog de Preguntas y Respuestas</h2>
+                
+                <div class="blog-post-form">
+                    <h3>Haz tu pregunta</h3>
+                    <form id="preguntaForm">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                        
+                        <label for="email">Email (opcional):</label>
+                        <input type="email" id="email" name="email">
+                        
+                        <label for="pregunta">Tu pregunta:</label>
+                        <textarea id="pregunta" name="pregunta" rows="4" required></textarea>
+                        
+                        <label for="categoria">Categoría:</label>
+                        <select id="categoria" name="categoria">
+                            <option value="general">General</option>
+                            <option value="peliculas">Películas específicas</option>
+                            <option value="premios">Premios Óscar</option>
+                            <option value="tecnica">Aspectos técnicos</option>
+                            <option value="historia">Historia del cine</option>
+                        </select>
+                        
+                        <button type="submit">Publicar pregunta</button>
+                    </form>
+                </div>
+                
+                <div class="blog-posts">
+                    <h3>Últimas preguntas</h3>
+                    <!-- Las preguntas se cargarán dinámicamente desde localStorage -->
+                </div>
+            </section>
+
+            <section id="cuestionario" class="cuestionario-container">
+                <h2>Cuestionario</h2>
+                <fieldset>
+                    <h1>Formulario de conocimientos Previos</h1>
+                    <form name="formulario" onsubmit="return false">
+                        <label for="user"> Nombre</label>
+                        <input type="text" name="user" id="user" required> <br/> <br/>
+
+                        <label for="edad"> Edad</label>
+                        <select name="edad" id="edad" required>
+                            <option value="-15"> 15</option>
+                            <option value="16"> 16</option>
+                            <option value="17"> 17</option>
+                            <option value="18"> 18</option>
+                            <option value="19"> 19</option>
+                            <option value="20"> 20</option>
+                            <option value="+20"> +20</option>
+                        </select><br/>
+
+                        <label for="genero"> Genero</label><br/>
+                        <input type="radio" name="genero" id="genero-f" value="f" required> Femenino <br/>
+                        <input type="radio" name="genero" id="genero-m" value="m"> Masculino <br/> <br/>
+
+                        <label for="años"> ¿Cuántos años de cine cubre la Página? </label><br/>
+                        <input type="radio" name="años" id="años1" value="2015-2019" required> 2015-2019 <br/>
+                        <input type="radio" name="años" id="años2" value="2005-2025"> 2005-2025 <br/>
+                        <input type="radio" name="años" id="años3" value="2015-2024"> 2015-2024 <br/> <br/>
+
+                        <label for="director"> Que pelicula fue dirijida por Guillermo del toro? </label><br/>
+                        <input type="radio" name="director" id="director1" value="La forma del agua" required> La forma del agua <br/>
+                        <input type="radio" name="director" id="director2" value="Dunkerque"> Dunkerque <br/>
+                        <input type="radio" name="director" id="director3" value="Mank"> Mank <br/> <br/>
+
+                        <label for="pelicula"> Consideras que hay alguna pelicula que devio estar agregada en esta pagina? </label><br/>
+                        <input type="radio" name="pelicula" id="pelicula-si" value="Si" required>Si
+                        <input type="radio" name="pelicula" id="pelicula-no" value="No">No <br/>
+
+                        <label for="NomP"> Nombre de la pelicula </label>
+                        <input type="text" name="NomP" id="NomP"> <br/> <br/>
+
+                        <label for="lanzada"> En que año fue el lanzamiento Oppenheimer? </label><br/>
+                        <input type="radio" name="lanzada" id="lanzada1" value="2024" required> 2024 <br/>
+                        <input type="radio" name="lanzada" id="lanzada2" value="2023"> 2023 <br/>
+                        <input type="radio" name="lanzada" id="lanzada3" value="2021"> 2021 <br/> <br/>
+
+                        <label for="Jajas"> Quien fue el director de la pelicula Joker? </label><br/>
+                        <input type="radio" name="Jajas" id="Jajas1" value="Mel Gibson" required> Mel Gibson <br/>
+                        <input type="radio" name="Jajas" id="Jajas2" value="Christopher Nolan"> Christopher Nolan <br/>
+                        <input type="radio" name="Jajas" id="Jajas3" value="Todd Phillips"> Todd Phillips <br/> <br/>
+
+                        <label for="aten"> Cual fue la pelicula que mas te llamo la atencion?</label> <br/>
+                        <select name="aten" id="aten" required>
+                            <option value="">-- Selecciona una opción --</option>
+                            <option value="Interestellar"> Interestellar</option>
+                            <option value="The Imitation Game"> The Imitation Game</option>
+                            <option value="El renacido"> El renacido</option>
+                            <option value="Marte"> Marte</option>
+                            <option value="Moonlight"> Moonlight</option>
+                            <option value="Hasta el último hombre"> Hasta el último hombre</option>
+                            <option value="La forma del agua"> La forma del agua</option>
+                            <option value="Dunkerque"> Dunkerque</option>
+                            <option value="Green Book"> Green Book</option>
+                            <option value="Pantera Negra"> Pantera Negra</option>
+                            <option value="Joker"> Joker</option>
+                            <option value="Parásitos"> Parásitos</option>
+                            <option value="Nomadland"> Nomadland</option>
+                            <option value="Mank"> Mank</option>
+                            <option value="CODA"> CODA</option>
+                            <option value="DUNE"> DUNE</option>
+                            <option value="Todo a la vez en todas partes"> Todo a la vez en todas partes</option>
+                            <option value="Los Fabelman (The Fabelmans)"> Los Fabelman (The Fabelmans)</option>
+                            <option value="Oppenheimer"> Oppenheimer</option>
+                            <option value="Pobres Criaturas (Poor Things)"> Pobres Criaturas (Poor Things)</option>
+                        </select><br/><br/>
+
+                        <label> Que año consideras que tuvo mayor impacto en la industria del cine?</label><br/>
+                        <label for="cine"> Año: </label>
+                        <input type="text" name="cine" id="cine" pattern="\d{4}" title="Por favor ingresa un año válido (4 dígitos)" required> <br/>
+
+                        <input type="button" name="boton" onclick="generarPDF()" value="Generar PDF">
+                    </form>
+                </fieldset>
+            </section>
         </section>
     </main>
+
+    <footer class="content-section">
+        <h2>Página web desarrollada para la materia de Programación Web 1. Primavera 2025. Universidad Politécnica de San Luis Potosí</h2>
+    </footer>
+
+    <!-- Chatbot Container -->
+    <div id="landbot-chatbot" class="landbot-chatbot-container"></div>
+
+    <script>
+    window.addEventListener('mouseover', initLandbot, { once: true });
+    window.addEventListener('touchstart', initLandbot, { once: true });
+    var myLandbot;
+    function initLandbot() {
+      if (!myLandbot) {
+        var s = document.createElement('script');
+        s.type = "module"
+        s.async = true;
+        s.addEventListener('load', function() {
+          var myLandbot = new Landbot.Livechat({
+            configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2925210-TQLNPHY7HFQPJMTD/index.json',
+          });
+        });
+        s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+      }
+    }
+    </script>
 </body>
 </html>

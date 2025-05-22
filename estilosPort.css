@@ -5,38 +5,44 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column; /* Para que el header esté arriba y el contenido abajo */
-    align-items: center; /* Centrar el contenido horizontalmente */
-    min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
-    width: 100vw; /* Asegura que el body ocupe todo el ancho de la ventana */
-    box-sizing: border-box; /* Incluye el padding y el border en el cálculo del ancho y alto */
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
 }
 
 header {
     background-color: #111;
-    padding: 20px;
-    width: 100%; /* Asegura que el header ocupe todo el ancho */
+    padding: 15px 20px;
+    width: 100%;
     box-sizing: border-box;
+    
+    top: 0;
+    z-index: 100;
 }
 
 nav {
     display: flex;
     justify-content: space-evenly;
-    width: 100%; /* Asegura que la navegación ocupe todo el ancho */
+    width: 100%;
     box-sizing: border-box;
-    padding: 10px 0; /* Añade un poco de espacio vertical */
+    padding: 8px 0;
+    flex-wrap: wrap;
 }
 
 nav button {
     background-color: transparent;
     border: none;
     color: white;
-    padding: 10px 20px;
-    margin: 0; /* Elimina el margen horizontal para mejor distribución */
+    padding: 10px 15px;
+    margin: 0;
     cursor: pointer;
-    font-size: 16px;
-    flex-grow: 1; /* Permite que los botones se expandan para llenar el espacio */
-    text-align: center; /* Centra el texto dentro de los botones */
+    font-size: 14px;
+    flex-grow: 1;
+    text-align: center;
+    transition: all 0.3s ease;
+    min-width: 100px;
 }
 
 nav button:hover {
@@ -46,7 +52,7 @@ nav button:hover {
 
 .active a {
     color: white;
-    padding: 10px 20px;
+    padding: 10px 15px;
     text-decoration: none;
     margin: 0;
     border-radius: 5px;
@@ -54,150 +60,148 @@ nav button:hover {
 
 .title {
     color: yellow;
-    font-size: 2em;
-    margin-bottom: 20px;
-    width: 90%; /* Ocupa un porcentaje del ancho para evitar que sea demasiado ancho en pantallas grandes */
+    font-size: 1.5em;
+    margin: 15px 0;
+    width: 95%;
     text-align: center;
+    padding: 0 10px;
 }
 
 .years {
     display: grid;
-    grid-template-columns: repeat(5, minmax(150px, 1fr)); /* Fuerza 5 columnas */
-    gap: 20px; /* Reduce el gap para más elementos en pantalla */
-    margin-top: 20px;
-    width: 90%; /* Ocupa un porcentaje del ancho */
-    max-width: 1200px; /* Limita el ancho máximo en pantallas muy grandes */
+    grid-template-columns: repeat(5, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
+    width: 95%;
+    max-width: 1200px;
     box-sizing: border-box;
-    justify-content: center; /* Centra los bloques de años si no llenan la fila */
+    padding: 0 10px;
 }
 
 .year {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centra el texto vertical y horizontalmente */
+    justify-content: center;
     color: yellow;
-    padding: 45px;
+    padding: 30px;
     text-align: center;
-    border-radius: 15px;
+    border-radius: 12px;
     text-decoration: none;
-    /* background-size: cover; Elimina esta propiedad */
-    background-size: contain; /* La imagen se ajusta para estar completamente dentro */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
-    min-height: 150px; /* Asegura una altura mínima para cada año */
-    transition: transform 0.3s ease-in-out; /* Para el efecto hover */
+    min-height: 120px;
+    transition: all 0.3s ease;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
 }
 
 .year:hover {
-    transform: scale(1.10); /* Pequeño efecto de zoom al pasar el ratón */
+    transform: scale(1.05);
+    filter: brightness(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
 .content-section {
     background-color: #111;
-    padding: 40px;
+    padding: 25px;
     text-align: center;
     width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    margin: 10px 0;
 }
-.content-section:hover{
-    background-color: gray;
-    padding: 40px;
-    text-align: center;
+
+.content-section:hover {
+    background-color: #333;
+    padding: 25px;
 }
 
 .content-section h2 {
-    font-size: 2em;
+    font-size: 1.5em;
+    margin: 0 0 15px 0;
 }
-h2{
-    font-family: titulo2 ;
+
+h2 {
+    font-family: titulo2;
     color: #efb810;
 }
 
-/* Efecto hover específico para los elementos .year-2015 a .year-2024 */
-.year-2015:hover,
-.year-2016:hover,
-.year-2017:hover,
-.year-2018:hover,
-.year-2019:hover,
-.year-2020:hover,
-.year-2021:hover,
-.year-2022:hover,
-.year-2023:hover,
-.year-2024:hover {
-    filter: brightness(1.2); /* Aumenta el brillo al pasar el ratón */
-    /* Puedes usar otras propiedades como transform, box-shadow, etc. */
-}
 
-.year-2015 {
-    background-image: url('img/2015.jpg');
-}
+.year-2015 { background-image: url('img/2015.jpg'); }
+.year-2016 { background-image: url('img/2016.jpeg'); }
+.year-2017 { background-image: url('img/2017.jpg'); }
+.year-2018 { background-image: url('img/2018.jpg'); }
+.year-2019 { background-image: url('img/2019.jpg'); }
+.year-2020 { background-image: url('img/2020.jpg'); }
+.year-2021 { background-image: url('img/2021.jpg'); }
+.year-2022 { background-image: url('img/2022.jpeg'); }
+.year-2023 { background-image: url('img/2023.jpg'); }
+.year-2024 { background-image: url('img/2024.jpg'); }
 
-.year-2016 {
-    background-image: url('img/2016.jpeg');
-}
-
-.year-2017 {
-    background-image: url('img/2017.jpg');
-}
-
-.year-2018 {
-    background-image: url('img/2018.jpg');
-}
-
-.year-2019 {
-    background-image: url('img/2019.jpg');
-}
-
-.year-2020 {
-    background-image: url('img/2020.jpg');
-}
-
-.year-2021 {
-    background-image: url('img/2021.jpg');
-}
-
-.year-2022 {
-    background-image: url('img/2022.jpeg');
-}
-
-.year-2023 {
-    background-image: url('img/2023.jpg');
-}
-
-.year-2024 {
-    background-image: url('img/2024.jpg');
-}
-@font-face{
-    font-family: titulo2 ;
+@font-face {
+    font-family: titulo2;
     src: url(Fuentes/Sanchez-Regular.ttf);
-
 }
 
 
-@media (max-width: 900px) { /* Ajusta el ancho máximo para el cambio a menos de 5 columnas */
-    .years {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Vuelve a ser adaptativo en pantallas más pequeñas */
-    }
-}
+
 
 @media (max-width: 600px) {
     .years {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Más columnas en pantallas pequeñas */
+        grid-template-columns: repeat(2, 1fr);
         gap: 10px;
     }
-
+    
     .year {
-        padding: 20px; /* Reduce el padding en pantallas pequeñas */
+        padding: 20px;
         min-height: 100px;
-        font-size: 0.9em; /* Reduce el tamaño de la fuente en pantallas pequeñas */
+        font-size: 0.9em;
     }
-
+    
     nav {
-        flex-direction: column; /* Apila los botones en pantallas pequeñas */
+        flex-direction: column;
         align-items: center;
+        padding: 0;
     }
-
+    
     nav button {
-        margin: 5px 0;
-        width: 80%;
+        width: 100%;
+        margin: 2px 0;
+        padding: 8px 0;
+        font-size: 13px;
+    }
+    
+    .title {
+        font-size: 1.2em;
+        margin: 10px 0;
+    }
+    
+    header {
+        padding: 10px 15px;
+    }
+    
+    .content-section {
+        padding: 15px;
+    }
+    
+    .content-section h2 {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 400px) {
+    .years {
+        grid-template-columns: 1fr;
+    }
+    
+    .year {
+        padding: 25px;
+        min-height: 80px;
+    }
+    
+    .title {
+        font-size: 1.1em;
     }
 }
