@@ -1,0 +1,82 @@
+        body {
+          background-image: url('TTT.png');
+         background-size: cover;
+         background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+         margin: 0;
+         padding: 0;
+         min-height: 100vh;
+        }
+
+        .input-container, #lista-tareas {
+        background-color: rgba(100, 63, 184, 0.8);
+         padding: 20px;
+         border-radius: 10px;
+         max-width: 600px;
+         margin: 20px auto;
+        }
+
+       h2 {
+             color: rgb(238, 255, 0);
+             text-align: center;
+             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+             padding-top: 20px;
+        }
+        .input-container {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        #nueva-tarea {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #00838f;
+            border-radius: 5px 0 0 5px;
+        }
+
+         #agregar-btn{
+
+             background-color: #c8ff00;
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            }
+           
+        #agregar-btn:hover {
+            background-color: #00ff11;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #ffffff;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-left: 5px solid #05919d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+        }
+        li.completada {
+            text-decoration: line-through;
+            color: #000000;
+            opacity: 0.6;
+        }
+        .eliminar {
+            background-color: #b43131;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .eliminar:hover {
+            background-color: #ff0000;
+        }
+
+       
