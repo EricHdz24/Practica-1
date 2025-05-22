@@ -1,0 +1,230 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    color: #333;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+h1 {
+    color: #006847;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #006847 0%, #CE1126 100%);
+    border-radius: 2px;
+}
+
+h2 {
+    color: #CE1126;
+    font-size: 1.8rem;
+    margin-top: 30px;
+}
+
+/* Contenedor del formulario */
+.containerFormulario {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.formulario {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* Estilos para las preguntas */
+.question {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border-left: 5px solid #006847;
+}
+
+.question:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.question h3 {
+    color: #006847;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+/* Estilos para los inputs y labels */
+label {
+    display: block;
+    margin: 10px 0;
+    padding: 12px 15px;
+    background-color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #ddd;
+    position: relative;
+    overflow: hidden;
+}
+
+label:hover {
+    background-color: #f0f0f0;
+    border-color: #006847;
+}
+
+label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+input[type="radio"]:checked + label {
+    background-color: #e8f4f0;
+    border-color: #006847;
+}
+
+input[type="radio"]:checked + label::before {
+    background-color: #006847;
+}
+
+input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+/* Botones */
+button, input[type="button"] {
+    background: linear-gradient(135deg, #006847 0%, #004d36 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 30px auto;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+button:hover, input[type="button"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #004d36 0%, #006847 100%);
+}
+
+.pdf-btn {
+    background: linear-gradient(135deg, #CE1126 0%, #a50d20 100%);
+}
+
+.pdf-btn:hover {
+    background: linear-gradient(135deg, #a50d20 0%, #CE1126 100%);
+}
+
+/* Resultados */
+.containerResultados {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.resultados {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 30px;
+}
+
+#calificacion {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border-left: 5px solid #CE1126;
+}
+
+/* Gráfico */
+.chart-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 30px 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Clases para respuestas */
+.correct {
+    color: #006847;
+    font-weight: bold;
+}
+
+.incorrect {
+    color: #CE1126;
+}
+
+.explanation {
+    font-style: italic;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .formulario, .resultados {
+        width: 100%;
+        padding: 20px 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .question {
+        padding: 15px;
+    }
+}
