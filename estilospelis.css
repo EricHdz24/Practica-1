@@ -9,24 +9,22 @@ body {
 .container {
     max-width: 100%;
     margin: 0 auto;
-    padding: 15px;
+    padding: 20px;
 }
 
 nav {
     display: flex;
     justify-content: space-evenly;
-    flex-wrap: wrap;
 }
 
 nav button {
     background-color: transparent;
     border: none;
     color: white;
-    padding: 10px 15px;
-    margin: 0 5px;
+    padding: 10px 20px;
+    margin: 0 10px;
     cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s ease;
+    font-size: 16px;
 }
 
 nav button:hover {
@@ -36,20 +34,20 @@ nav button:hover {
 
 .active a {
     color: white;
-    padding: 10px 15px;
+    padding: 10px 20px;
     text-decoration: none;
-    margin: 0 3px;
+    margin: 0 5px;
     border-radius: 5px;
 }
 
 header {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 header h1 {
-    font-size: 1.5em;
-    margin-bottom: 8px;
+    font-size: 2em;
+    margin-bottom: 10px;
     color: yellow;
 }
 
@@ -66,21 +64,20 @@ nav ul {
 
 nav li {
     display: inline;
-    margin: 0 8px;
+    margin: 0 10px;
 }
 
 nav a {
     color: yellow;
     text-decoration: none;
-    font-size: 14px;
 }
 
 .movie-section1, .movie-section2, .movie-section3 {
     display: flex;
     flex-direction: column;
     border-top: 1px solid gray;
-    padding-top: 15px;
-    margin-bottom: 15px;
+    padding-top: 20px;
+    margin-bottom: 20px;
 }
 
 .movie-info1, .movie-info2, .movie-info3 {
@@ -88,50 +85,87 @@ nav a {
 }
 
 .movie-info1 h2, .movie-info2 h2, .movie-info3 h2 {
-    font-size: 1.3em;
-    margin-bottom: 8px;
+    font-size: 1.5em;
+    margin-bottom: 10px;
 }
 
 .movie-details {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 }
 
-/* Estilos generales para todas las películas */
-[class^="movie-title"], [class*=" movie-title"] {
-    margin-right: 0;
-    margin-bottom: 15px;
+/* Clase base para todas las imágenes de películas */
+.movie-poster {
+    margin-right: 40px;
     display: flex;
     align-items: center;
-    padding: 30px;
-    border-radius: 10px;
+    padding: 50px;
+    border-radius: 15px;
     background-size: cover;
     background-position: center;
-    width: 100%;
-    min-height: 150px;
-    box-sizing: border-box;
+    min-height: 200px;
+    margin-bottom: 20px;
 }
+
+/*Peliculas 2015*/
+.movie-title1_2015 { background-image: url('img/peli1_2015.jpg'); }
+.movie-title2_2015 { background-image: url('img/peli2_2015.png'); }
+
+/*Peliculas 2016*/
+.movie-title1_2016 { background-image: url('img/pelis1_2016.png'); }
+.movie-title2_2016 { background-image: url('img/pelis2_2016.png'); }
+
+/*Peliculas 2017*/
+.movie-title1_2017 { background-image: url('img/pelis1_2017.png'); }
+.movie-title2_2017 { background-image: url('img/pelis2_2017.png'); }
+
+/*Peliculas 2018*/
+.movie-title1_2018 { background-image: url('img/pelis1_2018.png'); }
+.movie-title2_2018 { background-image: url('img/pelis2_2018.png'); }
+
+/*Peliculas 2019*/
+.movie-title1_2019 { background-image: url('img/pelis1_2019.png'); }
+.movie-title2_2019 { background-image: url('img/pelis2_2019.png'); }
+
+
+/*Peliculas 2020*/
+.movie-title1_2020 { background-image: url('img/pelis1_2020.png'); }
+.movie-title2_2020 { background-image: url('img/pelis2_2020.png'); }
+
+
+/*Peliculas 2021*/
+.movie-title1_2021 { background-image: url('img/pelis1_2021.jpg'); }
+.movie-title2_2021 { background-image: url('img/pelis2_2021.jpg'); }
+
+
+/*Peliculas 2022*/
+.movie-title1_2022 { background-image: url('img/pelis1_2022.jpeg'); }
+.movie-title2_2022 { background-image: url('img/pelis2_2022.jpg'); }
+
+
+/*Peliculas 2023*/
+.movie-title1_2023 { background-image: url('img/pelis1_2023.jpg'); }
+.movie-title2_2023 { background-image: url('img/pelis2_2023.jpg'); }
+
+
+/*Peliculas 2024*/
+.movie-title1_2024 { background-image: url('img/pelis1_2024.jpeg'); }
+.movie-title2_2024 { background-image: url('img/pelis2_2024.jpg'); }
+
 
 .movie-text p {
-    margin: 4px 0;
-    font-size: 14px;
+    margin: 5px 0;
 }
-
 .movie-text h3 {
     color: yellow;
-    margin: 5px 0;
-    font-size: 1.1em;
+    margin: 5px 5px;
 }
 
-.movie-trailer1 video, 
-.movie-trailer2 video, 
-.movie-trailer3 video {
-    width: 100%;
+.movie-trailer1 video, .movie-trailer2 video, .movie-trailer3 video {
+    max-width: 100%;
     height: auto;
-    max-height: 250px;
     display: block;
-    margin: 15px auto 0;
+    margin: 20px auto 0;
 }
 
 .content-section {
@@ -139,14 +173,11 @@ nav a {
     padding: 20px;
     text-align: center;
     width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 15px;
     transition: all 0.3s ease;
 }
 
 .content-section:hover {
     background-color: gray;
-    padding: 20px;
 }
 
 .content-section h2 {
@@ -164,96 +195,48 @@ h2 {
 }
 
 /* Media Queries para responsividad */
-@media (max-width: 900px) {
-    .years {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
-    }
-    
-    [class^="movie-title"], [class*=" movie-title"] {
-        padding: 25px;
-    }
-}
-
 @media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-    
     nav {
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
     }
-    
+
     nav button {
-        margin: 3px 0;
+        margin: 5px 0;
         width: 100%;
-        padding: 8px 0;
-        font-size: 13px;
+        text-align: center;
     }
-    
-    header h1 {
-        font-size: 1.3em;
+
+    .movie-section1, .movie-section2, .movie-section3 {
+        padding: 10px;
     }
-    
-    .movie-section1, 
-    .movie-section2, 
-    .movie-section3 {
-        padding-left: 5px;
-        padding-right: 5px;
-        margin-bottom: 10px;
+
+    .movie-details {
+        flex-direction: column;
     }
-    
-    .movie-info1 h2, 
-    .movie-info2 h2, 
-    .movie-info3 h2 {
-        font-size: 1.2em;
+
+    .movie-poster {
+        margin-right: 0;
+        width: 100%;
+        padding: 30px;
+        margin-bottom: 15px;
     }
-    
-    [class^="movie-title"], 
-    [class*=" movie-title"] {
-        padding: 20px;
-        min-height: 120px;
-    }
-    
-    .movie-text p {
-        font-size: 13px;
-    }
-    
-    .movie-text h3 {
-        font-size: 1em;
-    }
-    
-    .content-section {
-        padding: 15px;
-    }
-    
-    .content-section h2 {
-        font-size: 1.3em;
-    }
-    
+
     .movie-trailer1 video, 
     .movie-trailer2 video, 
     .movie-trailer3 video {
-        margin: 10px auto 0;
+        height: auto;
     }
-}
 
-@media (max-width: 400px) {
-    [class^="movie-title"], 
-    [class*=" movie-title"] {
-        padding: 15px;
-        min-height: 100px;
-    }
-    
-    .movie-text p {
-        font-size: 12px;
-    }
-    
     header h1 {
-        font-size: 1.2em;
+        font-size: 1.5em;
     }
-    
+
+    .content-section {
+        padding: 15px;
+    }
+
     .content-section h2 {
-        font-size: 1.1em;
+        font-size: 1.2em;
     }
 }
